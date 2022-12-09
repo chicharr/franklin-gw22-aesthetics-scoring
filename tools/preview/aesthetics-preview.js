@@ -11,7 +11,7 @@
  */
 
 const aesServiceUrl = 'https://webpage-aesthetics-ns-team-xpsuccess-sandbox.corp.ethos13-stage-va7.ethos.adobe.net/aesthetics/predict?apiKey=xpsucc3ss&url=';
-const defaultHost ='https://main--gw22-aesthetics-scoring-franklin--chicharr.hlx.page';
+const defaultHost ='https://main--gw22-aesthetics-scoring-franklin--chicharr.hlx.page/';
 
 /**
  * Retrieves the content of a metadata tag.
@@ -51,7 +51,7 @@ function createScoreElement(scoreName, score) {
   score.aesthetics_scores.forEach((entry) => {
     const fname = entry.feature_name;
     const fvalue = entry.feature_value;
-    scores.concat(`<p>${fname}: ${fvalue}"></p>`);  
+    scores = scores.concat(`<p>${fname}: ${fvalue}</p>`);  
   });
   div.innerHTML = `<div>
     <h5><code>${scoreName}</code></h5>
@@ -66,17 +66,29 @@ function createScoreElement(scoreName, score) {
  */
 async function createAesthScoring() {
   const div = document.createElement('div');
+  div.className = 'hlx-experiment hlx-badge';
+  div.classList.add(`hlx-experiment-status-active`);
+  div.innerHTML = `Aesthetics Scoring: <span class="hlx-open"></span>
+    <div class="hlx-popup hlx-hidden">
+    <div class="hlx-variants"></div>
+    </div>`;
+
+  const popup = div.querySelector('.hlx-popup');
+  div.addEventListener('click', () => {
+    popup.classList.toggle('hlx-hidden');
+  });
+  const variantsDiv = div.querySelector('.hlx-variants')
   let ogUrl = getMetadata('og:url');
   if (!ogUrl.includes("hlx.page") && !ogUrl.includes("localhost")) {
       //Is published
     const liveScoring = await getAestheticsScoring(ogUrl);     
-    div.appendChild(createScoreElement('Live', liveScoring));
+    variantsDiv.appendChild(createScoreElement('Live', liveScoring));
   }
   if (ogUrl.includes('https://localhost:3000')) {
     ogUrl = ogUrl.replace('http://localhost:3000/',defaultHost);
   }
   const prevScoring = await getAestheticsScoring(window.location+"?aesthetics=disabled");      
-  div.appendChild(createScoreElement('Preview', prevScoring));  
+  variantsDiv.appendChild(createScoreElement('Preview', prevScoring));  
   return (div);
 }
 
