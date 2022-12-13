@@ -44,20 +44,20 @@ const defaultHost ='https://main--gw22-aesthetics-scoring-franklin--chicharr.hlx
 }
 
 
-function createScoreElement(scoreName, score) {  
+function createScoreElement(scoreName, score) {
   const div = document.createElement('div');
   div.className = `hlx-variant`;
   let scores = '';
   score.aesthetics_scores.forEach((entry) => {
     const fname = entry.feature_name;
     const fvalue = entry.feature_value;
-    scores = scores.concat(`<p>${fname}: ${fvalue}</p>`);  
+    scores = scores.concat(`<p>${fname}: ${fvalue}</p>`);
   });
   div.innerHTML = `<div>
     <h5><code>${scoreName}</code></h5>
       ${scores}
     </div>`
-  return (div);  
+  return (div);
 }
 
 /**
@@ -83,28 +83,28 @@ async function createAesthScoring() {
     url = url.replace('http://localhost:3000', defaultHost);
   }
   // Get live scoring
-  const liveUrl = url.replace('.hlx.page', '.hlx.live'); 
+  const liveUrl = url.replace('.hlx.page', '.hlx.live');
   const liveScoring = await getAestheticsScoring(liveUrl);
   if (liveScoring) {
     variantsDiv.appendChild(createScoreElement('Live', liveScoring));
   }
   // Get preview scoring
-  const prevScoring = await getAestheticsScoring(window.location+"?aesthetics=disabled");      
-  variantsDiv.appendChild(createScoreElement('Preview', prevScoring));  
+  const prevScoring = await getAestheticsScoring(window.location+"?aesthetics=disabled");
+  variantsDiv.appendChild(createScoreElement('Preview', prevScoring));
   return (div);
 }
 
-async function getAestheticsScoring(url) {    
+async function getAestheticsScoring(url) {
   const startTime = new Date();
 
   console.log("calling aesthetics scoring for url: " + url);
-  const res = await fetch(aesServiceUrl + encodeURIComponent(url));
+  const res = await fetch(aesServiceUrl + encodeURIComponent(url), { mode: 'no-cors' });
   if (res.ok) {
-    const data = await res.json();    
+    const data = await res.json();
     const endTime = new Date();
     const timeDiff = endTime - startTime; //in ms
     console.log("time to get the score " + timeDiff + " ms.");
-    return data;          
+    return data;
   }
   console.log("request failed");
 }
