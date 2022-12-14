@@ -11,14 +11,14 @@
  */
 
 const aesServiceUrl = 'https://webpage-aesthetics-ns-team-xpsuccess-sandbox.corp.ethos13-stage-va7.ethos.adobe.net/aesthetics/predict?apiKey=xpsucc3ss&url=';
-const defaultHost ='https://main--gw22-aesthetics-scoring-franklin--chicharr.hlx.page';
+const defaultHost = 'https://main--gw22-aesthetics-scoring-franklin--chicharr.hlx.page';
 
 /**
  * Retrieves the content of a metadata tag.
  * @param {string} name The metadata name (or property)
  * @returns {string} The metadata value
  */
- export function getMetadata(name) {
+export function getMetadata(name) {
   const attr = name && name.includes(':') ? 'property' : 'name';
   const meta = document.head.querySelector(`meta[${attr}="${name}"]`);
   return meta && meta.content;
@@ -28,7 +28,7 @@ const defaultHost ='https://main--gw22-aesthetics-scoring-franklin--chicharr.hlx
  * Loads a CSS file.
  * @param {string} href The path to the CSS file
  */
- export function loadCSS(href, callback) {
+export function loadCSS(href, callback) {
   if (!document.querySelector(`head > link[href="${href}"]`)) {
     const link = document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
