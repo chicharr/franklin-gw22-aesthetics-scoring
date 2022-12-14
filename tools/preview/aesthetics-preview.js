@@ -46,7 +46,7 @@ const defaultHost ='https://main--gw22-aesthetics-scoring-franklin--chicharr.hlx
 
 function createScoreElement(scoreName, score) {  
   const div = document.createElement('div');
-  div.className = `hlx-variant`;
+  div.className = 'hlx-variant';
   let scores = '';
   score.aesthetics_scores.forEach((entry) => {
     const fname = entry.feature_name;
@@ -67,7 +67,7 @@ function createScoreElement(scoreName, score) {
 async function createAesthScoring() {
   const div = document.createElement('div');
   div.className = 'hlx-experiment hlx-badge';
-  div.classList.add(`hlx-experiment-status-active`);
+  div.classList.add('hlx-experiment-status-active');
   div.innerHTML = `Aesthetics Scoring: <span class="hlx-open"></span>
     <div class="hlx-popup hlx-hidden">
     <div class="hlx-variants"></div>
