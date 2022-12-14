@@ -43,7 +43,6 @@ export function loadCSS(href, callback) {
   }
 }
 
-
 function createScoreElement(scoreName, score) {  
   const div = document.createElement('div');
   div.className = 'hlx-variant';
